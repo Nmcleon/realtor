@@ -1,0 +1,48 @@
+/* CSS Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Your styles */
+.header-container {
+  background-color: white;
+  border-bottom: 2px solid #ddd;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding-top: 8px;
+  position: static;
+  top: 0;
+  z-index: 70;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 12px;
+  padding-right: 12px;
+  margin: auto;
+}
+
+.header-links {
+  display: flex;
+  gap: 16px;
+  list-style: none;
+}
+
+.logo {
+  height: 25px;
+  cursor: pointer;
+}
+
+.header-link {
+  color: #666;
+  cursor: pointer;
+  padding: 8px 0 8px 0;
+}
+
+.header-link.active {
+  color: black;
+  border-bottom: 3px solid red;
+}
