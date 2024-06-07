@@ -50,7 +50,7 @@ export default function SignUp() {
       await setDoc(doc(db, 'users', user.uid), formDataCopy);
       navigate('/');
     } catch (error) {
-      toast.error(`Error signing up: ${error.message}`);
+      toast.error('Problem signing up');
     }
   }
 
