@@ -15,7 +15,7 @@ import { useNavigate } from 'react-router-dom';
 import { db } from '../firebase';
 
 export default function CreateListing() {
-  const navigate = useNavigate;
+  const navigate = useNavigate();
   const auth = getAuth();
   const [geolocationEnabled, setGeoLocationEnabled] = useState(true);
   const [loading, setLoading] = useState(false);
