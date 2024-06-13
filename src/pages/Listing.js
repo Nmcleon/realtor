@@ -38,7 +38,7 @@ export default function Listing() {
         navigation
         pagination={{ type: 'progressbar' }}
         effect="fade"
-        modules={[EffectFade, Autoplay, Navigation, Pagination]} // Corrected modules array
+        modules={[EffectFade, Autoplay, Navigation, Pagination]}
         autoplay={{ delay: 3000 }}
       >
         {listing?.imgUrls.map((url, index) => (
