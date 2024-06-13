@@ -4,7 +4,11 @@ import { useParams } from 'react-router-dom';
 import { db } from '../firebase';
 import Spinner from '../components/Spinner';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/css/bundle';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/scrollbar';
+import { EffectFade, Autoplay, Navigation, Pagination } from 'swiper/modules';
 
 export default function Listing() {
   const params = useParams();
@@ -34,6 +38,7 @@ export default function Listing() {
         navigation
         pagination={{ type: 'progressbar' }}
         effect="fade"
+        modules={[EffectFade, Autoplay, Navigation, Pagination]} // Corrected modules array
         autoplay={{ delay: 3000 }}
       >
         {listing?.imgUrls.map((url, index) => (
