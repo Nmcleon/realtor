@@ -14,9 +14,9 @@ export default function OAuth() {
       const provider = new GoogleAuthProvider();
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
-      //console.log(user);
 
-      //check if user exist in db, if not move Google sign in user to users db
+      // check if user exist in DB
+
       const docRef = doc(db, 'users', user.uid);
       const docSnap = await getDoc(docRef);
 
@@ -31,15 +31,15 @@ export default function OAuth() {
       navigate('/');
     } catch (error) {
       toast.error('Google authorization failed');
-      //console.log(error);
     }
   }
   return (
     <button
+      type="button"
       onClick={googleAuth}
       className="flex items-center justify-center w-full bg-red-700 text-white px-7 py-3 uppercase text-sm font-medium hover:bg-red-800 active:bg-red-900 shadow-md hover:shadow-lg active:shadow-lg transition duration-150 ease-in-out rounded"
     >
-      <FcGoogle className=" text-2xl  bg-white rounded-full mr-2 " />
+      <FcGoogle className="text-2xl  bg-white rounded-full mr-2" />
       Continue with Google
     </button>
   );
