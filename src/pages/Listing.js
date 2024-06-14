@@ -9,6 +9,7 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import { EffectFade, Autoplay, Navigation, Pagination } from 'swiper/modules';
+import { FaShare } from 'react-icons/fa';
 
 export default function Listing() {
   const params = useParams();
@@ -53,6 +54,9 @@ export default function Listing() {
           </SwiperSlide>
         ))}
       </Swiper>
+      <div className="">
+        <FaShare />
+      </div>
     </main>
   );
 }
