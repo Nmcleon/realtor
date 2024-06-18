@@ -19,57 +19,66 @@ export default function Slider() {
     async function fetchListings() {
       const listingsRef = collection(db, 'listings');
       const q = query(listingsRef, orderBy('timestamp', 'desc'), limit(4));
-      const querySnapshot = await getDocs(q);
-      let listings = [];
-      querySnapshot.forEach((doc) => {
-        return listings.push({
-          id: doc.id,
-          data: doc.data(),
+      try {
+        const querySnapshot = await getDocs(q);
+        let listings = [];
+        querySnapshot.forEach((doc) => {
+          listings.push({
+            id: doc.id,
+            data: doc.data(),
+          });
         });
-      });
-      setListings(listings);
-      setLoading(false);
+        setListings(listings);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching listings:', error);
+        setLoading(false); // Ensure loading state is properly managed on error
+      }
     }
     fetchListings();
   }, []);
+
   if (loading) {
     return <Spinner />;
   }
-  if (listings.length === 0) {
-    return <></>;
+
+  if (!listings || listings.length === 0) {
+    return <p>No listings available.</p>;
   }
+
   return (
-    listings && (
-      <>
-        <Swiper
-          slidesPerView={1}
-          navigation
-          pagination={{ type: 'progressbar' }}
-          effect="fade"
-          modules={[EffectFade, Autoplay, Navigation, Pagination]}
-          autoplay={{ delay: 3000 }}
-        >
-          {listings.map(({ data, id }) => (
-            <SwiperSlide key={id}>
-              <div
-                style={{
-                  background: `url(${data.imgUrls[0]}) center, no-repeat`,
-                  backgroundSize: 'cover',
-                }}
-                className="relative w-full h-[300px] overflow-hidden cursor-pointer"
-                onClick={() => navigate(`/category/${data.type}/${id}`)}
-              ></div>
-              <p className="text-[#f1faee] absolute left-1 top-3 font-medium max-w-[90%] bg-[#457b9d] shadow-lg opacity-90 p-2 rounded-br-3xl">
-                {data.name}
-              </p>
-              <p className="text-[#f1faee] absolute left-1 bottom-1 font-semibold max-w-[90%] bg-[#e63946] shadow-lg opacity-90 p-2 rounded-tr-3xl">
-                ${data.discountedPrice ?? data.regularPrice}
-                {data.type === 'rent' && ' / month'}
-              </p>
-            </SwiperSlide>
-          ))}
-        </Swiper>
-      </>
-    )
+    <>
+      <Swiper
+        slidesPerView={1}
+        navigation
+        pagination={{ type: 'progressbar' }}
+        effect="fade"
+        modules={[EffectFade, Autoplay, Navigation, Pagination]}
+        autoplay={{ delay: 3000 }}
+      >
+        {listings.map(({ data, id }) => (
+          <SwiperSlide key={id}>
+            <div
+              style={{
+                background: `url(${data.imgUrls[0]}) center, no-repeat`,
+                backgroundSize: 'cover',
+              }}
+              className="relative w-full h-[300px] overflow-hidden cursor-pointer"
+              onClick={() => {
+                console.log('Navigating to:', data.type, id);
+                navigate(`/category/${data.type}/${id}`);
+              }}
+            ></div>
+            <p className="text-[#f1faee] absolute left-1 top-3 font-medium max-w-[90%] bg-[#457b9d] shadow-lg opacity-90 p-2 rounded-br-3xl">
+              {data.name}
+            </p>
+            <p className="text-[#f1faee] absolute left-1 bottom-1 font-semibold max-w-[90%] bg-[#e63946] shadow-lg opacity-90 p-2 rounded-tr-3xl">
+              ${data.discountedPrice ?? data.regularPrice}
+              {data.type === 'rent' && ' / month'}
+            </p>
+          </SwiperSlide>
+        ))}
+      </Swiper>
+    </>
   );
 }
